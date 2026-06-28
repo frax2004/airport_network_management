@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Airport Network JAR",
+      "type": "shell",
+      "command": "jar --create --file airport_network_manager.jar --main-class Main -C bin .",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

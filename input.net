@@ -1,0 +1,10 @@
+declare airport PMO-345 at (90.00, 67.6, 45.66);
+declare airport PMO-345 at (90.00, 67.6, 45.66);
+declare airport PMO-345 at (90.00, 67.6, 45.66);
+declare airport PMO-345 at (90.00, 67.6, 45.66);
+
+declare route from PMO-345 to PMO-345 through [plain, mountain, plain] cost 450;
+declare route from PMO-345 to PMO-345 through [mountain, sea, plain] cost 4500;
+declare route from PMO-345 to PMO-345 through [river, sea, mountain] cost 405;
+declare route from PMO-345 to PMO-345 through [plain, mountain, desert] cost 40050;
+declare route from PMO-345 to PMO-345 through [desert, plain, sea, mountain, plain] cost 4050;
