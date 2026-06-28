@@ -5,4 +5,7 @@ options {
   language = Java;
 }
 
-network: ;
+network: airportStatement+ routeStatement+;
+
+airportStatement: DECLARE AIRPORT IDENTIFIER AT LEFT_PAREN NUMBER COMMA NUMBER COMMA NUMBER RIGHT_PAREN SEMI;
+

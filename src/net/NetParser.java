@@ -17,8 +17,10 @@ public class NetParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		INLINE_COMMENT=1, COMMENT=2, SPACE=3, FLOAT_LIT=4, LEFT_PAREN=5, RIGHT_PAREN=6, 
-		SEMI=7, COMMA=8, IDENTIFIER=9;
+		INLINE_COMMENT=1, COMMENT=2, SPACE=3, DECLARE=4, ROUTE=5, FROM=6, TO=7, 
+		THROUGH=8, AIRPORT=9, AT=10, COST=11, MOUNTAIN=12, PLAIN=13, SEA=14, RIVER=15, 
+		DESERT=16, NUMBER=17, LEFT_PAREN=18, RIGHT_PAREN=19, LEFT_SQUARE=20, RIGHT_SQUARE=21, 
+		SEMI=22, COMMA=23, IDENTIFIER=24;
 	public static final int
 		RULE_network = 0;
 	private static String[] makeRuleNames() {
@@ -30,14 +32,18 @@ public class NetParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, null, null, null, null, "'('", "')'", "';'", "','"
+			null, null, null, null, "'declare'", "'route'", "'from'", "'to'", "'through'", 
+			"'airport'", "'at'", "'cost'", "'mountain'", "'plain'", "'sea'", "'river'", 
+			"'desert'", null, "'('", "')'", "'['", "']'", "';'", "','"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "INLINE_COMMENT", "COMMENT", "SPACE", "FLOAT_LIT", "LEFT_PAREN", 
-			"RIGHT_PAREN", "SEMI", "COMMA", "IDENTIFIER"
+			null, "INLINE_COMMENT", "COMMENT", "SPACE", "DECLARE", "ROUTE", "FROM", 
+			"TO", "THROUGH", "AIRPORT", "AT", "COST", "MOUNTAIN", "PLAIN", "SEA", 
+			"RIVER", "DESERT", "NUMBER", "LEFT_PAREN", "RIGHT_PAREN", "LEFT_SQUARE", 
+			"RIGHT_SQUARE", "SEMI", "COMMA", "IDENTIFIER"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -132,10 +138,10 @@ public class NetParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\t\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000\u0001"+
-		"\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0003\u0000\u0002\u0001\u0000"+
-		"\u0000\u0000\u0002\u0003\u0001\u0000\u0000\u0000\u0003\u0001\u0001\u0000"+
-		"\u0000\u0000\u0000";
+		"\u0004\u0001\u0018\u0005\u0002\u0000\u0007\u0000\u0001\u0000\u0001\u0000"+
+		"\u0001\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0003\u0000\u0002\u0001"+
+		"\u0000\u0000\u0000\u0002\u0003\u0001\u0000\u0000\u0000\u0003\u0001\u0001"+
+		"\u0000\u0000\u0000\u0000";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

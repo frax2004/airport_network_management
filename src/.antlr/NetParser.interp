@@ -3,9 +3,24 @@ null
 null
 null
 null
+'declare'
+'route'
+'from'
+'to'
+'through'
+'airport'
+'at'
+'cost'
+'mountain'
+'plain'
+'sea'
+'river'
+'desert'
 null
 '('
 ')'
+'['
+']'
 ';'
 ','
 null
@@ -15,9 +30,24 @@ null
 INLINE_COMMENT
 COMMENT
 SPACE
-FLOAT_LIT
+DECLARE
+ROUTE
+FROM
+TO
+THROUGH
+AIRPORT
+AT
+COST
+MOUNTAIN
+PLAIN
+SEA
+RIVER
+DESERT
+NUMBER
 LEFT_PAREN
 RIGHT_PAREN
+LEFT_SQUARE
+RIGHT_SQUARE
 SEMI
 COMMA
 IDENTIFIER
@@ -27,4 +57,4 @@ network
 
 
 atn:
-[4, 1, 9, 5, 2, 0, 7, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 2, 1, 0, 0, 0, 2, 3, 1, 0, 0, 0, 3, 1, 1, 0, 0, 0, 0]
+[4, 1, 24, 5, 2, 0, 7, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 2, 1, 0, 0, 0, 2, 3, 1, 0, 0, 0, 3, 1, 1, 0, 0, 0, 0]

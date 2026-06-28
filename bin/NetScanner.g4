@@ -32,4 +32,4 @@ SEMI: ';';
 COMMA: ',';
 
 // Identifier
-IDENTIFIER: [a-zA-Z_];
+IDENTIFIER: [A-Z][A-Z][A-Z] '-' [0-9][0-9][0-9];
