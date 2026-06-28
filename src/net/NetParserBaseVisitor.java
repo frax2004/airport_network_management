@@ -1,4 +1,4 @@
-// Generated from c:/Users/franc/Desktop/Università/lab di alg/airport_network_management/src/NetParser.g4 by ANTLR 4.13.1
+// Generated from c:/Dev/uni/algo/airport_network_management/src/NetParser.g4 by ANTLR 4.13.1
 package net;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -19,4 +19,25 @@ public class NetParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> impleme
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitNetwork(NetParser.NetworkContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAirportStatement(NetParser.AirportStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitRouteStatement(NetParser.RouteStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTerritory(NetParser.TerritoryContext ctx) { return visitChildren(ctx); }
 }

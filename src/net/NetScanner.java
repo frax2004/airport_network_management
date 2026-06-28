@@ -1,4 +1,4 @@
-// Generated from c:/Users/franc/Desktop/Università/lab di alg/airport_network_management/src/NetScanner.g4 by ANTLR 4.13.1
+// Generated from c:/Dev/uni/algo/airport_network_management/src/NetScanner.g4 by ANTLR 4.13.1
 package net;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

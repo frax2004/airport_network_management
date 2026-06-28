@@ -1,4 +1,4 @@
-// Generated from c:/Users/franc/Desktop/Università/lab di alg/airport_network_management/src/NetParser.g4 by ANTLR 4.13.1
+// Generated from c:/Dev/uni/algo/airport_network_management/src/NetParser.g4 by ANTLR 4.13.1
 package net;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -16,4 +16,22 @@ public interface NetParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNetwork(NetParser.NetworkContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link NetParser#airportStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAirportStatement(NetParser.AirportStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link NetParser#routeStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRouteStatement(NetParser.RouteStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link NetParser#territory}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTerritory(NetParser.TerritoryContext ctx);
 }

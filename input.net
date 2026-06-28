@@ -1,10 +1,10 @@
 declare airport PMO-345 at (90.00, 67.6, 45.66);
-declare airport PMO-345 at (90.00, 67.6, 45.66);
-declare airport PMO-345 at (90.00, 67.6, 45.66);
-declare airport PMO-345 at (90.00, 67.6, 45.66);
+declare airport FCO-123 at (90.00, 67.6, 45.66);
+declare airport MXP-456 at (90.00, 67.6, 45.66);
+declare airport NYC-341 at (90.00, 67.6, 45.66);
 
-declare route from PMO-345 to PMO-345 through [plain, mountain, plain] cost 450;
-declare route from PMO-345 to PMO-345 through [mountain, sea, plain] cost 4500;
-declare route from PMO-345 to PMO-345 through [river, sea, mountain] cost 405;
-declare route from PMO-345 to PMO-345 through [plain, mountain, desert] cost 40050;
-declare route from PMO-345 to PMO-345 through [desert, plain, sea, mountain, plain] cost 4050;
+declare route from PMO-345 to NYC-341 through [plain, mountain, plain] cost 450;
+declare route from MXP-456 to PMO-345 through [mountain, sea, plain] cost 4500;
+declare route from FCO-123 to PMO-345 through [river, sea, mountain] cost 405;
+declare route from FCO-123 to MXP-456 through [plain, mountain, desert] cost 40050;
+declare route from PMO-345 to FCO-123 through [desert, plain, sea, mountain, plain] cost 4050;
