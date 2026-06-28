@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -22,7 +23,14 @@ public class Main {
       return;
     }
 
-    Graph G = network.toGraph();
+    UndirectedGraph G = network.toGraph();
+    UndirectedGraph MST = G.computeMST();
+
+    try (PrintStream output = new PrintStream("out.json")) {
+      output.println(G.toJSONString());
+    } catch(IOException e) {
+      System.err.println(e.getMessage());
+    }
   }
 
   private static Network parse(String path) throws IOException {

@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,8 @@ public class NetworkBuilder extends NetParserBaseVisitor<Object> {
 
   public Network build() {
     this.visit(this.parseTree);
-    return new Network(this.airports.values(), this.routes);
+    Collection<Route> r = this.routes;
+    return new Network(this.airports.values(), r);
   }
 }
 

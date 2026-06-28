@@ -1,5 +1,4 @@
 // Generated from c:/Users/franc/Desktop/Università/lab di alg/airport_network_management/src/NetParser.g4 by ANTLR 4.13.1
-package net;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -124,11 +123,6 @@ public class NetParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NetParserListener ) ((NetParserListener)listener).exitNetwork(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NetParserVisitor ) return ((NetParserVisitor<? extends T>)visitor).visitNetwork(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final NetworkContext network() throws RecognitionException {
@@ -219,11 +213,6 @@ public class NetParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NetParserListener ) ((NetParserListener)listener).exitAirportStatement(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NetParserVisitor ) return ((NetParserVisitor<? extends T>)visitor).visitAirportStatement(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final AirportStatementContext airportStatement() throws RecognitionException {
@@ -312,11 +301,6 @@ public class NetParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NetParserListener ) ((NetParserListener)listener).exitRouteStatement(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NetParserVisitor ) return ((NetParserVisitor<? extends T>)visitor).visitRouteStatement(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final RouteStatementContext routeStatement() throws RecognitionException {
@@ -403,11 +387,6 @@ public class NetParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof NetParserListener ) ((NetParserListener)listener).exitTerritory(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof NetParserVisitor ) return ((NetParserVisitor<? extends T>)visitor).visitTerritory(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 

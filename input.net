@@ -1,7 +1,7 @@
 declare airport PMO-345 at (90.00, 67.6, 45.66);
-declare airport FCO-123 at (90.00, 67.6, 45.66);
-declare airport MXP-456 at (90.00, 67.6, 45.66);
-declare airport NYC-341 at (90.00, 67.6, 45.66);
+declare airport FCO-123 at (79.00, 846.6, 475.66);
+declare airport MXP-456 at (98.00, 67.6, 85.686);
+declare airport NYC-341 at (859.00, 7.66, 475.66);
 
 declare route from PMO-345 to NYC-341 through [plain, mountain, plain] cost 450;
 declare route from MXP-456 to PMO-345 through [mountain, sea, plain] cost 4500;
