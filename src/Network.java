@@ -18,6 +18,11 @@ import net.NetScanner;
 
 public record Network(Collection<? extends Airport> airports, Collection<? extends Route> routes) {
 
+  /**
+   * Parse a file and load the network object
+   * @param path the input path
+   * @return the network if no exception was thrown, an empty option otherwise.
+   */
   public static Optional<Network> loadFromFile(String path) {
     try {
       CharStream istream = CharStreams.fromFileName(path);
@@ -31,6 +36,10 @@ public record Network(Collection<? extends Airport> airports, Collection<? exten
     return Optional.empty();
   }
 
+  /**
+   * Converts this network to its graph representation
+   * @return The undirected graph representation of this network
+   */
   public UndirectedGraph toGraph() {
     UndirectedGraph G = new UndirectedGraph(airports.size());
 
