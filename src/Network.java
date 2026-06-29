@@ -16,7 +16,7 @@ import collections.UndirectedGraph;
 import net.NetParser;
 import net.NetScanner;
 
-public record Network(Collection<? extends Airport> airports, Collection<? extends Route> routes) {
+public final record Network(Collection<? extends Airport> airports, Collection<? extends Route> routes) {
 
   /**
    * Parse a file and load the network object

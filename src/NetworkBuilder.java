@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import net.NetParser;
 import net.NetParserBaseVisitor;
 
-public class NetworkBuilder extends NetParserBaseVisitor<Object> {
+public final class NetworkBuilder extends NetParserBaseVisitor<Object> {
 
   private final Map<String, Airport> airports = new HashMap<>();
   private final List<Route> routes = new ArrayList<>();
@@ -44,7 +44,7 @@ public class NetworkBuilder extends NetParserBaseVisitor<Object> {
   public Object visitRouteStatement(NetParser.RouteStatementContext ctx) {
     String src_id = ctx.src_id.getText();
     String dst_id = ctx.dst_id.getText();
-    double cost = Double.parseDouble(ctx.cost.getText());
+    double weight = Double.parseDouble(ctx.cost.getText());
     String[] territories = ctx
     .territories
     .stream()
@@ -65,7 +65,7 @@ public class NetworkBuilder extends NetParserBaseVisitor<Object> {
     }
 
     if(ok) {
-      this.routes.add(new Route(src, dst, territories, cost));
+      this.routes.add(new Route(src, dst, territories, weight));
     }
 
     return null;

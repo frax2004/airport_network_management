@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
  * Represents an adjacency list based undirected graph
  * UndirectedGraph
  */
-public class UndirectedGraph {
+public final class UndirectedGraph {
 
   /**
    * keeps track of the edge count
@@ -79,7 +79,7 @@ public class UndirectedGraph {
    * Converts this graph into an unformatted json string
    * @return the json string representation of the graph
    */
-  public final String toJSONString() {
+  public String toJSONString() {
     return "{\"count\": %s, \"links\": %s}".formatted(
       this.getNodeCount(),
       this.adjacencyList
