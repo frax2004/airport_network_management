@@ -2,10 +2,34 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+
+import collections.Edge;
+import collections.UndirectedGraph;
+import net.NetParser;
+import net.NetScanner;
+
 public record Network(Collection<? extends Airport> airports, Collection<? extends Route> routes) {
+
+  public static Optional<Network> loadFromFile(String path) {
+    try {
+      CharStream istream = CharStreams.fromFileName(path);
+      NetScanner scanner = new NetScanner(istream);
+      CommonTokenStream tokens = new CommonTokenStream(scanner);
+      NetParser parser = new NetParser(tokens);
+      ParseTree tree = parser.network();
+      return Optional.of(new NetworkBuilder(tree).build());
+    } catch(Exception e) {}
+
+    return Optional.empty();
+  }
 
   public UndirectedGraph toGraph() {
     UndirectedGraph G = new UndirectedGraph(airports.size());
