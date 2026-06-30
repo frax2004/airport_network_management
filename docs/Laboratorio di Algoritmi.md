@@ -291,3 +291,4 @@ L’algoritmo di Prim nell’implementazione lazy trova il MST in tempo proporzi
 
 #### Dimostrazione
 Ogni arco viene inserito e rimosso al massimo una volta, quindi il numero di operazioni sulla coda e' $O(E)$, le operazioni sulla coda richiedono tempo $O(\log E)$, da cui si ha il risultato.
+

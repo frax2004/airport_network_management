@@ -16,7 +16,7 @@ public static void main(String[] args) {
     // And then convert to graph
     .map(Network::toGraph)
     // And then convert to minimum spanning tree
-    .map(UndirectedGraph::computeMST)
+    .map(UndirectedGraph::computeMinimumSpanningForest)
     // And then convert to json string
     .map(UndirectedGraph::toJSONString)
     // And then print the output to a file
