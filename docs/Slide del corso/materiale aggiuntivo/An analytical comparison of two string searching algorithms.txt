@@ -1,0 +1,11 @@
+Gerhard Barth,
+An analytical comparison of two string searching algorithms,
+Information Processing Letters,
+Volume 18, Issue 5,
+1984,
+Pages 249-256,
+ISSN 0020-0190,
+https://doi.org/10.1016/0020-0190(84)90003-6.
+(https://www.sciencedirect.com/science/article/pii/0020019084900036)
+Abstract: Average case analyses of two algorithms to locate the leftmost occurrence of a string Pattern in a string Text are conducted in this paper. One algorithm is based on a straightforward trial-and-error approach, the other one uses a sophisticated stragegy discovered by Knuth, Morris and Pratt (1977). Costs measured are the expected number of comparisons between individual characters. Let Naive and kmp denote the average case complexities of the two algorithms, respectively. We show that 1−(1/c)+(1/c2) is an accurate approximation for the ratio kmp/Naive, provided both Pattern and Text are random strings over an alphabet of size c. In both cases, the application of Markov chain theory is expedient for performing the analysis. However, in order to get rid of complex conditioning, the Markov chain model for the kmp algorithm is based on some heuristics. This approach is believed to be practically sound. Some indication on the complexity that might be involved in an exact average case analysis of the kmp algorithm can be found in the work by Guibas and Odlyzko (1981).
+Keywords: Substring tests; pattern matching algorithms; Knuth-Morris-Pratt algorithm; analysis of combinatorial algorithms; Markov chain theory
