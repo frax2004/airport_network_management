@@ -48,18 +48,6 @@ public class NetParserBaseListener implements NetParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRouteStatement(NetParser.RouteStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTerritory(NetParser.TerritoryContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTerritory(NetParser.TerritoryContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

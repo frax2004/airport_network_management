@@ -37,14 +37,4 @@ public interface NetParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRouteStatement(NetParser.RouteStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link NetParser#territory}.
-	 * @param ctx the parse tree
-	 */
-	void enterTerritory(NetParser.TerritoryContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link NetParser#territory}.
-	 * @param ctx the parse tree
-	 */
-	void exitTerritory(NetParser.TerritoryContext ctx);
 }

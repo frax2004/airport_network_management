@@ -3,46 +3,83 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import collections.Edge;
+import com.raylib.Raylib.Rectangle;
+import com.raylib.Raylib.Vector2;
+
+import static com.raylib.Raylib.*;
+
+import collections.UndirectedWeightedEdge;
 import collections.UndirectedGraph;
 import net.NetParser;
 import net.NetScanner;
 
-public final class Network {
 
+/**
+ * Represent an airport network
+ * Network
+ */
+public final class Network extends UndirectedGraph {
+
+  /**
+   * Map an airport name to an id
+   */
   private Map<String, Integer> ids = new HashMap<>();
-  private final Collection<? extends Airport> airports;
-  private final Collection<? extends Route> routes;
+
+  /**
+   * The airport array
+   */
+  private final Airport[] airports;
+
+  /**
+   * The route array
+   */
+  private final Route[] routes;
   
+  /**
+   * Constructs a network
+   * @param airports the airports
+   * @param routes the routes
+   */
   public Network(Collection<? extends Airport> airports, Collection<? extends Route> routes) {
-    this.airports = airports;
-    this.routes = routes;
+    super(airports.size());
+    this.airports = airports.toArray(Airport[]::new);
+    this.routes = routes.toArray(Route[]::new);
 
-    int i = 0;
-    for(Airport airport : this.airports) {
-      this.ids.put(airport.id(), i++);
-    }
+    this.ids = IntStream
+    .range(0, airports.size())
+    .boxed()
+    .collect(Collectors.toMap(i -> this.airports[i].id(), Function.identity()));
+
+    routes
+    .stream()
+    .map(this::toEdge)
+    .forEach(this::addEdge);
   }
 
-  public Collection<? extends Airport> getAirports() {
-    return this.airports;
+  /**
+   * Get the airports of this network
+   * @return The airports
+   */
+  public Airport[] getAirports() {
+    return Arrays.copyOf(this.airports, this.airports.length);
   }
 
-  public Collection<? extends Route> getRoutes() {
-    return this.routes;
-  }
-
-  public Map<String, Integer> getIds() {
-    return this.ids;
+  /**
+   * Get the routes of this network
+   * @return The routes
+   */
+  public Route[] getRoutes() {
+    return Arrays.copyOf(this.routes, this.routes.length);
   }
 
   /**
@@ -64,34 +101,117 @@ public final class Network {
   }
 
   /**
-   * Converts this network to its graph representation
-   * @return The undirected graph representation of this network
+   * Computes the minimum spanning forest with Prim's algorithm (Eager Version)
+   * @return the minimum spanning forest for this network
    */
-  public UndirectedGraph toGraph() {
-    UndirectedGraph G = new UndirectedGraph(airports.size());
+  @Override
+  public Network computeMinimumSpanningForest() {
+    return new Network(
+      Arrays.asList(this.airports), 
+      super
+      .computeMinimumSpanningForest()
+      .edges()
+      .map(this::toRoute)
+      .toList()
+    );
+  }
 
-    ToDoubleFunction<String> toTerritoryCost = s -> switch (s) {
-      case "mountain" -> 4;
-      case "plain" -> 1;
-      case "sea" -> 1.2;
-      case "river" -> .5;
-      case "desert" -> 3;
-      default -> 0;
+  /**
+   * Draws this network into the screen
+   * @param bounds a rectangle which sets the viewport for drawing
+   */
+  public void draw(Rectangle bounds) {
+    var xStats = Arrays.stream(this.airports).mapToDouble(Airport::x).summaryStatistics();
+    var yStats = Arrays.stream(this.airports).mapToDouble(Airport::z).summaryStatistics();
+    var costStats = this.edges().mapToDouble(UndirectedWeightedEdge::weight).summaryStatistics();
+    double minX = xStats.getMin();
+    double maxX = xStats.getMax();
+    double minY = yStats.getMin();
+    double maxY = yStats.getMax();
+    double minCost = costStats.getMin();
+    double maxCost = costStats.getMax();
+    
+    Function<Airport, Vector2> toCoords = (airport) -> rl.vec2(
+      (float)(bounds.x() + ((airport.x() - minX)/(maxX - minX)) * bounds.width()),
+      (float)(bounds.y() + ((airport.z() - minY)/(maxY - minY)) * bounds.height())
+    );
+    
+    Consumer<UndirectedWeightedEdge> DrawEdge = edge -> {
+      Vector2 begin = toCoords.apply(airports[edge.either()]); 
+      Vector2 end = toCoords.apply(airports[edge.other(edge.either())]);
+
+      float theta = 0;
+      String label = "%.4f".formatted(edge.weight());
+
+      float textWidth = MeasureTextEx(GetFontDefault(), label, 20, 2).x();
+
+      DrawTextPro(
+        GetFontDefault(),
+        label,
+        rl.vec2(
+          (float)(begin.x() + .5*(end.x() - begin.x() - textWidth)),
+          (float)(begin.y() + .5*(end.y() - begin.y()) - 5)
+        ),
+        rl.vec2(0, 0),
+        theta,
+        20.0f,
+        2.0f,
+        rl.hex2rgb(0xffffffff)
+      );
+
+      DrawLineV(
+        begin,
+        end,
+        rl.rgblerp(
+          rl.hex2rgb(0x00ff00ff), 
+          rl.hex2rgb(0xff0000ff), 
+          (float)((edge.weight() - minCost) / (maxCost - minCost))
+        )
+      );
+
+
     };
 
-    ToIntFunction<Airport> toID = airport -> this.ids.get(airport.id());
+    this.edges().forEach(DrawEdge);
 
-    Function<Route, Edge> toEdge = route -> new Edge(
-      toID.applyAsInt(route.src()),
-      toID.applyAsInt(route.dst()),
-      route.cost() + Arrays
-      .stream(route.territories())
-      .mapToDouble(toTerritoryCost)
-      .sum() * route.distance()
-    );
-
-    routes.stream().map(toEdge).forEach(G::addEdge);
-
-    return G;
+    Arrays
+    .stream(airports)
+    .forEach(airport -> airport.draw(toCoords.apply(airport), 5, rl.hex2rgb(0xffd900ff)));
   }
+
+  /**
+   * Convert a route to an edge
+   * @param route the route
+   * @return the associated edge
+   */
+  private UndirectedWeightedEdge toEdge(Route route) {
+    return new UndirectedWeightedEdge(
+      this.toID(route.src()),
+      this.toID(route.dst()),
+      route.cost() * route.distance()
+    );
+  }
+
+  /**
+   * Convert an edge to a route
+   * @param edge the edge
+   * @return the associated route
+   */
+  private Route toRoute(UndirectedWeightedEdge edge) {
+    return new Route(
+      this.airports[edge.either()],
+      this.airports[edge.other(edge.either())],
+      edge.weight()
+    );
+  }
+
+  /**
+   * Converts an airport to its id
+   * @param airport the airport
+   * @return the associated id
+   */
+  private int toID(Airport airport) {
+    return this.ids.get(airport.id());
+  }
+
 }

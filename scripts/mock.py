@@ -20,7 +20,7 @@ with open('airports.json', 'r') as f:
   AIRPORTS = [*AIRPORTS]
 
 
-airports = random.choices(AIRPORTS, k = int(round(.05 * len(AIRPORTS))))
+airports = random.choices(AIRPORTS, k = 4)
 
 declarations = [
   f"declare airport {airport.iata}-000 at ({airport.lat}, {airport.elevation}, {airport.lon});\n" 
@@ -28,10 +28,10 @@ declarations = [
 ]
 
 routes = [
-  f"declare route from {random.choice(airports).iata}-000 to {random.choice(airports).iata}-000 through [mountain] cost {random.random()*1000};\n"
-  for _ in range(10, random.randint(15, 50))
+  f"declare route from {src.iata}-000 to {dst.iata}-000 cost {random.random()*1000};\n"
+  for src in airports for dst in airports if src.iata != dst.iata
 ]
 
-with open("input.net", "w") as f:
+with open("..\\examples\\input.net", "w") as f:
   f.writelines(declarations)
   f.writelines(routes)

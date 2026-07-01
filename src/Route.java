@@ -1,12 +1,9 @@
-import java.util.Arrays;
-
-public final record Route(Airport src, Airport dst, String[] territories, double cost) {
+public final record Route(Airport src, Airport dst, double cost) {
   @Override
   public final String toString() {
-    return "%s => %s :: %s / %s".formatted(
+    return "%s => %s :: %s".formatted(
       this.src.id(), 
       this.dst.id(), 
-      Arrays.toString(territories), 
       cost
     );
   }
@@ -19,15 +16,10 @@ public final record Route(Airport src, Airport dst, String[] territories, double
   }
 
   public final String toJSONString() {
-    return "{\"from\": \"%s\", \"to\": \"%s\", \"weight\": %s, \"territories\": %s}".formatted(
+    return "{\"from\": \"%s\", \"to\": \"%s\", \"weight\": %s}".formatted(
       this.src.id(),
       this.dst.id(),
-      this.cost,
-      Arrays
-      .stream(this.territories)
-      .map(s -> "\"%s\"".formatted(s))
-      .toList()
-      .toString()
+      this.cost
     );
   }
 }

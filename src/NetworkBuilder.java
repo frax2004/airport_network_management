@@ -1,6 +1,5 @@
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,11 +44,6 @@ public final class NetworkBuilder extends NetParserBaseVisitor<Object> {
     String src_id = ctx.src_id.getText();
     String dst_id = ctx.dst_id.getText();
     double weight = Double.parseDouble(ctx.cost.getText());
-    String[] territories = ctx
-    .territories
-    .stream()
-    .map(NetParser.TerritoryContext::getText)
-    .toArray(String[]::new);
   
     boolean ok = true;
     Airport src = this.airports.getOrDefault(src_id, null);
@@ -64,17 +58,14 @@ public final class NetworkBuilder extends NetParserBaseVisitor<Object> {
       System.err.printf("In route declaration, no matching destination airport with code \"%s\"\n", src_id);
     }
 
-    if(ok) {
-      this.routes.add(new Route(src, dst, territories, weight));
-    }
+    if(ok) this.routes.add(new Route(src, dst, weight));
 
     return null;
   }
 
   public Network build() {
     this.visit(this.parseTree);
-    Collection<Route> r = this.routes;
-    return new Network(this.airports.values(), r);
+    return new Network(this.airports.values(), this.routes);
   }
 }
 

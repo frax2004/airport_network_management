@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * Represents an adjacency list based undirected graph
  * UndirectedGraph
  */
-public final class UndirectedGraph {
+public class UndirectedGraph {
 
   /**
    * keeps track of the edge count
@@ -21,7 +21,7 @@ public final class UndirectedGraph {
   /**
    * the adjacency list graph internal data structure
    */
-  private final List<List<Edge>> adjacencyList;
+  private final List<List<UndirectedWeightedEdge>> adjacencyList;
 
   /**
    * Constructs an undirected graph
@@ -30,7 +30,7 @@ public final class UndirectedGraph {
   public UndirectedGraph(int nodeCount) {
     this.adjacencyList = IntStream
     .range(0, nodeCount)
-    .mapToObj(_ -> (List<Edge>)new ArrayList<Edge>())
+    .mapToObj(_ -> (List<UndirectedWeightedEdge>)new ArrayList<UndirectedWeightedEdge>())
     .toList();
   }
 
@@ -38,10 +38,10 @@ public final class UndirectedGraph {
    * Get the total weight of this graph, that is, the sum of the weights of the edges
    * @return the sum of the weighted edges
    */
-  public double weight() {
+  public final double weight() {
     return this
     .edges()
-    .mapToDouble(Edge::weight)
+    .mapToDouble(UndirectedWeightedEdge::weight)
     .sum();
   }
 
@@ -49,21 +49,25 @@ public final class UndirectedGraph {
    * Get the edge set of this graph
    * @return the edges
    */
-  public Stream<Edge> edges() {
-    return this
-    .adjacencyList
-    .stream()
-    .flatMap(List::stream)
-    .filter(edge -> edge.from() < edge.to());
+  public final Stream<UndirectedWeightedEdge> edges() {
+    List<UndirectedWeightedEdge> edges = new ArrayList<>();
+    for(int v = 0; v < this.getNodeCount(); v++) {
+      for(UndirectedWeightedEdge edge : this.adjacencyList.get(v)) {
+        if(edge.other(v) > v) edges.add(edge);
+      }
+    }
+
+    return edges.stream();
   }
 
   /**
    * Adds an undirected edge to the graph
    * @param edge the edge
    */
-  public void addEdge(Edge edge) {
-    this.adjacencyList.get(edge.from()).add(edge);
-    this.adjacencyList.get(edge.to()).add(edge);
+  public final void addEdge(UndirectedWeightedEdge edge) {
+    int v = edge.either();
+    this.adjacencyList.get(v).add(edge);
+    this.adjacencyList.get(edge.other(v)).add(edge);
     this.edgeCount++;
   }
 
@@ -71,7 +75,7 @@ public final class UndirectedGraph {
    * Get the node count
    * @return the node count
    */
-  public int getNodeCount() {
+  public final int getNodeCount() {
     return this.adjacencyList.size();
   }
 
@@ -79,17 +83,8 @@ public final class UndirectedGraph {
    * Get the edge count
    * @return the edge count
    */
-  public int getEdgeCount() {
+  public final int getEdgeCount() {
     return this.edgeCount;
-  }
-
-  /**
-   * Get an undirected edge
-   * @param from one vertex
-   * @param to the other vertex
-   */
-  public Edge getEdge(int from, int to) {
-    return this.adjacencyList.get(from).get(to);
   }
 
   /**
@@ -100,7 +95,7 @@ public final class UndirectedGraph {
   public UndirectedGraph computeMinimumSpanningForest() {
 
     int V = this.getNodeCount();
-    Edge[] edgeTo = new Edge[V];
+    UndirectedWeightedEdge[] edgeTo = new UndirectedWeightedEdge[V];
     double[] distTo = new double[V];
     boolean[] marked = new boolean[V];
     IndexMinPriorityQueue<Double> queue = new IndexMinPriorityQueue<>(V);
@@ -109,8 +104,8 @@ public final class UndirectedGraph {
 
     IntConsumer visit = vertex -> {
       marked[vertex] = true;
-      for(Edge edge : this.adjacencyList.get(vertex)) {
-        int other = edge.to();
+      for(UndirectedWeightedEdge edge : this.adjacencyList.get(vertex)) {
+        int other = edge.other(vertex);
         if(marked[other]) continue;
         if(edge.weight() < distTo[other]) {
           distTo[other] = edge.weight();
@@ -137,7 +132,7 @@ public final class UndirectedGraph {
 
 
     UndirectedGraph MSF = new UndirectedGraph(V);
-    
+
     Arrays
     .stream(edgeTo)
     .filter(Objects::nonNull)
@@ -150,13 +145,13 @@ public final class UndirectedGraph {
    * Converts this graph into an unformatted json string
    * @return the json string representation of the graph
    */
-  public String toJSONString() {
+  public final String toJSONString() {
     return "{\"count\": %s, \"links\": %s}".formatted(
       this.getNodeCount(),
       this.adjacencyList
       .stream()
       .flatMap(List::stream)
-      .map(Edge::toJSONString)
+      .map(UndirectedWeightedEdge::toJSONString)
       .toList()
       .toString()
     );

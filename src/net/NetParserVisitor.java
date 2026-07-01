@@ -28,10 +28,4 @@ public interface NetParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRouteStatement(NetParser.RouteStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link NetParser#territory}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTerritory(NetParser.TerritoryContext ctx);
 }
